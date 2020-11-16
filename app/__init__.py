@@ -3,7 +3,7 @@ from flask_pymongo import PyMongo
 
 app = Flask(__name__)
 app.config.from_object("config.Config")
-# mongo = PyMongo(app)
+mongo = PyMongo(app)
 
 from .users.views import user
 from .blogs.views import blog

@@ -1,12 +1,12 @@
 from flask import Blueprint, render_template, redirect, abort
 from flask import request, jsonify, make_response
-from flask import current_app as app
 from flask import session, url_for
 from datetime import datetime
 
 user = Blueprint("user", __name__, template_folder='templates', static_folder='static')
 
 # Custom imports
+from app import *
 from .models import *
 users = Users()
 
@@ -21,7 +21,9 @@ def not_found(error=None):
 
 @user.route("/")
 def index():
-    # print(session)
+    print(app.config)
+    if session:
+        print(session)
     return render_template("index.html")
 
 @user.route("/sign-up", methods=["POST","GET"])
@@ -57,7 +59,6 @@ def login():
 
     if request.method == "POST":
         req = request.form
-        # req = request.json
         
         missing = list()
         for k, v in req.items():
@@ -77,7 +78,7 @@ def login():
             # session.clear()
             session['logged_in']=True
             session["USERNAME"] = status
-            return "Login Successful"
+            return render_template("index.html")
         elif status == -1:
             return "Incorrect Password"
         else:
@@ -89,8 +90,9 @@ def login():
 @user.route("/logout")
 def logout():
 
+    print(session)
     session['logged_in']=False
-    # session.pop("USERNAME", None)
+    session.pop("USERNAME", None)
     # session.clear()
 
     return redirect(url_for("user.login"))

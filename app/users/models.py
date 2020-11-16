@@ -5,12 +5,9 @@ from bson import json_util
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 import bcrypt
-import os
 
 # Custom imports
-models = Flask(__name__)
-models.config['MONGO_URI'] = os.environ.get('MONGO_URI')
-mongo = PyMongo(models)
+from app import *
 
 class Users:
 
