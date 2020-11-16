@@ -6,8 +6,7 @@ class Config(object):
     TESTING = False
     SECRET_KEY = os.environ.get('SECRET_KEY')
     MONGO_URI = os.environ.get('MONGO_URI')
-    FLASK_ENV = 'development'
-    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = False
 
 class ProductionConfig(Config):
     pass

@@ -8,4 +8,4 @@ def index():
 
     app.logger.debug(app.config.get("ENV"))
 
-    return "Hello world!"
+    return """<h1>BLOGS...!!</h1><hr><a href="http://127.0.0.1:5000/">Profiles</a>"""

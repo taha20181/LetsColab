@@ -1,16 +1,16 @@
 from flask import Blueprint, render_template, redirect, abort
-from flask import request, jsonify, make_response
-from flask import session, url_for
+from flask import request, jsonify, make_response, url_for
 from datetime import datetime
+from flask import session
 
-user = Blueprint("user", __name__, template_folder='templates', static_folder='static')
+profile = Blueprint("profile", __name__, template_folder='templates', static_folder='static')
 
 # Custom imports
 from app import *
 from .models import *
 users = Users()
 
-@user.errorhandler(404)
+@profile.errorhandler(404)
 def not_found(error=None):
     message = {
         'status': 404,
@@ -19,14 +19,14 @@ def not_found(error=None):
     resp = jsonify(message)
     return (resp, 200)
 
-@user.route("/")
+@profile.route("/")
 def index():
-    print(app.config)
     if session:
-        print(session)
+        if session['logged_in'] == True:
+            return redirect(url_for("profile.user_profile"))
     return render_template("index.html")
 
-@user.route("/sign-up", methods=["POST","GET"])
+@profile.route("/sign-up", methods=["POST","GET"])
 def sign_up():
 
     if request.method == "POST":
@@ -50,11 +50,11 @@ def sign_up():
         newuser["password"] = hashed
 
         users.add_newuser(newuser)
-        return redirect(url_for("user.login"))
+        return redirect(url_for("profile.login"))
     
     return render_template("sign_up.html")
 
-@user.route("/login", methods=["POST","GET"])
+@profile.route("/login", methods=["POST","GET"])
 def login():
 
     if request.method == "POST":
@@ -75,10 +75,11 @@ def login():
         status = users.find_user(email,password)
         if type(status) == str:
             print(status)
-            # session.clear()
+            session.clear()
             session['logged_in']=True
             session["USERNAME"] = status
-            return render_template("index.html")
+            print("SESSION LOGIN : ",session)
+            return redirect(url_for("profile.index"))
         elif status == -1:
             return "Incorrect Password"
         else:
@@ -87,12 +88,22 @@ def login():
     return render_template("login.html")
 
 
-@user.route("/logout")
+@profile.route("/logout")
 def logout():
 
-    print(session)
-    session['logged_in']=False
+    print("AT LOGOUT : ",session)
+    session['logged_in'] = False
     session.pop("USERNAME", None)
-    # session.clear()
+    print("SESSION LOGOUT : ",session)
+    session.clear()
+    return redirect(url_for("profile.index"))
 
-    return redirect(url_for("user.login"))
+@profile.route("/show_session")
+def show_session():
+    print("SHOW SESSION : ",session)
+    return ""
+
+@profile.route("/profile")
+def user_profile():
+    user = session["USERNAME"]
+    return render_template("profile.html",user=user)

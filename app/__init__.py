@@ -5,8 +5,8 @@ app = Flask(__name__)
 app.config.from_object("config.Config")
 mongo = PyMongo(app)
 
-from .users.views import user
+from .profiles.views import profile
 from .blogs.views import blog
 
-app.register_blueprint(user, url_prefix='/')
+app.register_blueprint(profile, url_prefix='/')
 app.register_blueprint(blog, url_prefix='/blog')
