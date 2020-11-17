@@ -28,7 +28,7 @@ def index():
     return render_template("index.html")
 
 @profile.route("/signup", methods=["POST","GET"])
-def sign_up():
+def signup():
 
     if request.method == "POST":
         req = request.form
@@ -63,7 +63,7 @@ def sign_up():
             return redirect(url_for("profile.login"))
         else:
             flash('Password & Confirm password do not match.')
-            return redirect(url_for('profile.sign_up'))
+            return redirect(url_for('profile.signup'))
     
     return render_template("sign_up.html")
 

@@ -19,14 +19,14 @@ def create():
     if request.method == 'POST':
         req = request.form
 
-    newblog = {}
-    newblog['title'] = req.get('title')
-    newblog['image'] = req.get('image')
-    newblog['domain'] = req.get('domain')
-    newblog['body'] = req.get('body')
-    newblog['datetime'] = datetime.now()
+        newblog = {}
+        newblog['title'] = req.get('title')
+        newblog['image'] = req.get('image')
+        newblog['domain'] = req.get('domain')
+        newblog['body'] = req.get('body')
+        newblog['datetime'] = datetime.now()
 
-    print(newblog)
+        print(newblog)
 
     
     return render_template('create.html')
