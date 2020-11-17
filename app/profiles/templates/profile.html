@@ -7,7 +7,14 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1>Welcome {{user}}</h1>
+      <h1>Welcome {{ user['username'] }}</h1>
+      <ul>
+        <li>{{ user['first name'] }}</li>
+        <li>{{ user['last name'] }}</li>
+        <li>{{ user['email'] }}</li>
+        <li>{{ user['course'] }}</li>
+        <li>{{ user['branch'] }}</li>
+      </ul>
     </div>
   </div>
 </div>

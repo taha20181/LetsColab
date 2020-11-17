@@ -14,9 +14,15 @@ class Users:
     def add_newuser(self,newuser):
 
         user = {
-            "username": newuser['username'],
+            "first name": newuser['first_name'],
+            "last name": newuser['last_name'],
             "email": newuser['email'],
-            "password": newuser['password']
+            "mobile": newuser['mobile'],
+            "username": newuser['username'],
+            "course": newuser['course'],
+            "branch": newuser['branch'],
+            "password": newuser['password'],
+            "confirm password": newuser['confirm_password']
         }
 
         mongo.db.users.insert_one(user) 
@@ -38,3 +44,8 @@ class Users:
                 return -1
         else:
             return 0
+
+    def get_user(self,username):
+        user = mongo.db.users.find_one({'username': username})
+
+        return user

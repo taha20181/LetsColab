@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, abort
 from flask import request, jsonify, make_response, url_for
 from datetime import datetime
 from flask import session
+from flask import flash
 
 profile = Blueprint("profile", __name__, template_folder='templates', static_folder='static')
 
@@ -26,7 +27,7 @@ def index():
             return redirect(url_for("profile.user_profile"))
     return render_template("index.html")
 
-@profile.route("/sign-up", methods=["POST","GET"])
+@profile.route("/signup", methods=["POST","GET"])
 def sign_up():
 
     if request.method == "POST":
@@ -43,14 +44,26 @@ def sign_up():
             return render_template("sign_up.html", feedback=feedback)
         
         newuser={}
-        newuser["username"] = req.get("username")
+        newuser['first_name'] = req.get('fname')
+        newuser['last_name'] = req.get('lname')
         newuser["email"] = req.get("email")
+        newuser['mobile'] = req.get('mobile')
+        newuser["username"] = req.get("username")
+        newuser["course"] = req.get("course")
+        newuser["branch"] = req.get("branch")
         password = req.get("password")
+        confirm_passw = req.get('cpassw')
         hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt(14))
+        confirm_hashed = bcrypt.hashpw(confirm_passw.encode('utf-8'), bcrypt.gensalt(14))
         newuser["password"] = hashed
+        newuser["confirm_password"] = confirm_hashed
 
-        users.add_newuser(newuser)
-        return redirect(url_for("profile.login"))
+        if password == confirm_passw:
+            users.add_newuser(newuser)
+            return redirect(url_for("profile.login"))
+        else:
+            flash('Password & Confirm password do not match.')
+            return redirect(url_for('profile.sign_up'))
     
     return render_template("sign_up.html")
 
@@ -79,7 +92,7 @@ def login():
             session['logged_in']=True
             session["USERNAME"] = status
             print("SESSION LOGIN : ",session)
-            return redirect(url_for("profile.index"))
+            return redirect(url_for("profile.user_home"))
         elif status == -1:
             return "Incorrect Password"
         else:
@@ -103,7 +116,14 @@ def show_session():
     print("SHOW SESSION : ",session)
     return ""
 
-@profile.route("/profile")
-def user_profile():
+@profile.route("/home")
+def user_home():
     user = session["USERNAME"]
-    return render_template("profile.html",user=user)
+    return render_template("user_home.html", user=user)
+
+
+@profile.route('/userprofile')
+def user_profile():
+    username = session['USERNAME']
+    user = users.get_user(username)
+    return render_template('profile.html', user=user)
