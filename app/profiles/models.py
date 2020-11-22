@@ -8,6 +8,7 @@ import bcrypt
 
 # Custom imports
 from app import *
+from app import mongo
 
 class Users:
 
@@ -17,17 +18,20 @@ class Users:
             "first name": newuser['first_name'],
             "last name": newuser['last_name'],
             "email": newuser['email'],
+            "gender": newuser['gender'],
             "mobile": newuser['mobile'],
             "username": newuser['username'],
             "course": newuser['course'],
+            "year": newuser['year'],
             "branch": newuser['branch'],
+            "spec": newuser['spec'],
             "password": newuser['password'],
-            "confirm password": newuser['confirm_password']
+            # "confirm password": newuser['confirm_password'],
+            "account created": newuser['acc_created']
         }
 
         mongo.db.users.insert_one(user) 
-        # mongo.db.user.insert_one(user)
-        # return jsonify(user),200
+
     
     def find_user(self,email,password):
         

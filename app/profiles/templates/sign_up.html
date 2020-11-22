@@ -19,12 +19,12 @@
 
         <div class="form-group">
           <label>First Name</label>
-          <input type="text" class="form-control" id="fname" name="fname" placeholder="" >
+          <input type="text" class="form-control" id="fname" name="fname" placeholder="" required>
         </div>
 
         <div class="form-group">
           <label>Last Name</label>
-          <input type="text" class="form-control" id="lname" name="lname" placeholder="" >
+          <input type="text" class="form-control" id="lname" name="lname" placeholder="" required>
         </div>
 
         <!-- <div class="form-group">
@@ -33,33 +33,71 @@
         </div> -->
 
         <div class="form-group">
+          <label for="gender">Gender</label>
+          <br>
+          <input type="radio" name="gender" id="male" value="Male">
+          <label for="">Male</label>
+          <br>
+          <input type="radio" name="gender" id="female" value="Female">
+          <label for="">Female</label>
+        </div>
+
+        <div class="form-group">
           <label>Email</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" >
+          <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
         </div>
 
         <div class="form-group">
           <label>Mobile No.</label>
-          <input type="text" class="form-control" id="mobile" name="mobile" placeholder="" >
+          <input type="text" class="form-control" id="mobile" name="mobile" placeholder="" required>
         </div>
 
         <div class="form-group">
           <label>Username</label>
-          <input type="text" class="form-control" id="username" name="username" placeholder="Select a username" >
+          <input type="text" class="form-control" id="username" name="username" placeholder="Select a username" required>
         </div>
 
         <div class="form-group">
-          <label>Course - Year</label>
-          <input type="text" class="form-control" id="course" name="course" placeholder="B.Tech etc" >
+          <label for="course">Course</label>
+          <select name="course" id="course" required class="form-control">
+            <option value="" disabled selected>Select</option>
+            <option value="B.Tech">B.Tech</option>
+            <option value="M.Tech">M.Tech</option>
+            <option value="Integrated">Integrated</option>
+          </select>
         </div>
 
         <div class="form-group">
-          <label>Branch - Specialization</label>
-          <input type="text" class="form-control" id="branch" name="branch" placeholder="" >
+          <label for="year">Year</label>
+          <select name="year" id="year" required class="form-control">
+            <option value="" disabled selected>Select</option>
+            <option value="FY">First Year</option>
+            <option value="SY">Second Year</option>
+            <option value="TY">Third Year</option>
+            <option value="LY">Final Year</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="branch">Branch</label>
+          <select name="branch" id="branch" required class="form-control">
+            <option value="" disabled selected>Select</option>
+            <option value="Aerospace">AeroSpace</option>
+            <option value="Civil">Civil</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Information Technology">Information Technology</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="spec">Specialization</label>
+          <input type="text" name="spec" id="spec" required class="form-control">
         </div>
 
         <div class="form-group">
           <label>Password</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Create a password" >
+          <input type="password" class="form-control" id="password" name="password" placeholder="" >
         </div>
 
         <div class="form-group">

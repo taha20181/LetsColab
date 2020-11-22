@@ -3,13 +3,16 @@ from flask import request, jsonify, make_response, url_for
 from datetime import datetime
 from flask import session
 from flask import flash
+import bcrypt
 
 profile = Blueprint("profile", __name__, template_folder='templates', static_folder='static')
 
 # Custom imports
 from app import *
 from .models import *
+from ..blogs.models import Article
 users = Users()
+article = Article()
 
 @profile.errorhandler(404)
 def not_found(error=None):
@@ -46,25 +49,29 @@ def signup():
         newuser={}
         newuser['first_name'] = req.get('fname')
         newuser['last_name'] = req.get('lname')
+        newuser["gender"] = req.get('gender')
         newuser["email"] = req.get("email")
-        newuser['mobile'] = req.get('mobile')
+        newuser["mobile"] = req.get('mobile')
         newuser["username"] = req.get("username")
         newuser["course"] = req.get("course")
+        newuser["year"] = req.get("year")
         newuser["branch"] = req.get("branch")
+        newuser["spec"] = req.get("spec")
         password = req.get("password")
         confirm_passw = req.get('cpassw')
         hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt(14))
-        confirm_hashed = bcrypt.hashpw(confirm_passw.encode('utf-8'), bcrypt.gensalt(14))
+        # confirm_hashed = bcrypt.hashpw(confirm_passw.encode('utf-8'), bcrypt.gensalt(14))
         newuser["password"] = hashed
-        newuser["confirm_password"] = confirm_hashed
+        # newuser["confirm_password"] = confirm_hashed
+        newuser['acc_created'] = datetime.now()
 
-        if password == confirm_passw:
+        if bcrypt.checkpw(confirm_passw.encode('utf-8'), hashed):
             users.add_newuser(newuser)
             return redirect(url_for("profile.login"))
         else:
             flash('Password & Confirm password do not match.')
             return redirect(url_for('profile.signup'))
-    
+               
     return render_template("sign_up.html")
 
 @profile.route("/login", methods=["POST","GET"])
@@ -119,11 +126,14 @@ def show_session():
 @profile.route("/home")
 def user_home():
     user = session["USERNAME"]
-    return render_template("user_home.html", user=user)
+    articles = article.getAllArticles()
+    return render_template("user_home.html", articles = articles)
 
 
 @profile.route('/userprofile')
 def user_profile():
     username = session['USERNAME']
     user = users.get_user(username)
+    temp = user['account created']
+    user['account created'] = datetime.date(temp)
     return render_template('profile.html', user=user)
