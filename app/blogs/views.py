@@ -14,7 +14,9 @@ article = Article()
 
 @blog.route("/")
 def index():
-    return "View All Blogs here"
+    art = list(article.getAllArticles())
+    # print(art)
+    return render_template('all_articles.html',articles=art)
 
 
 @blog.route('/create', methods=['POST', 'GET'])
@@ -24,16 +26,18 @@ def create():
     ###########################
     if request.method == 'POST':
         req = request.form
-
+        dt = datetime.now()
+        date = dt.strftime("%a, %d.%m.%Y")
+        time = dt.strftime("%H:%M")
         newblog = {}
         newblog['title'] = req.get('title')
         newblog['image'] = req.get('image')
         newblog['domain'] = req.get('domain')
         newblog['body'] = req.get('body')
-        newblog['datetime'] = datetime.now()
+        newblog['datetime'] = {"date":date,"time":time}
         newblog['author'] = session['USERNAME']
 
-        print(newblog)
+        # print(newblog)
 
         resp = article.add_article(newblog)
 
