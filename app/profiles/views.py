@@ -137,3 +137,7 @@ def user_profile():
     temp = user['account created']
     user['account created'] = datetime.date(temp)
     return render_template('profile.html', user=user)
+
+@profile.route('/test')
+def test():
+    return render_template('test.html')
