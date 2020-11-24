@@ -8,7 +8,7 @@ from flask import g
 from app import *
 from .models import Article
 
-blog = Blueprint("blog", __name__, template_folder='templates', static_folder='static')
+blog = Blueprint("blog", __name__, template_folder='../templates/blog', static_folder='static', static_url_path='static')
 
 article = Article()
 

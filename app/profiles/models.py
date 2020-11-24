@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, session
 from flask_pymongo import PyMongo
 import json
 from bson import json_util
@@ -32,7 +32,20 @@ class Users:
 
         mongo.db.users.insert_one(user) 
 
-    
+    def add_personal_info(self,info):
+        user_info = {
+            'username' : info['username'],
+            'first name' : info['first name'],
+            'last name' : info['last name'],
+            'address' : info['address'],
+            'city' : info['city'],
+            'country' : info['country'],
+            'postal_code' : info['postal_code'],
+            'about_me' : info['about_me']
+        }
+        print(session['EMAIL'])
+        mongo.db.users.update_one({'email':session['EMAIL']},{'$set':user_info})
+
     def find_user(self,email,password):
         
         found = mongo.db.users.find_one({"email":email},{"_id":0})

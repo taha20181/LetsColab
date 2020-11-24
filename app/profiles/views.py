@@ -5,7 +5,7 @@ from flask import session
 from flask import flash
 import bcrypt
 
-profile = Blueprint("profile", __name__, template_folder='templates', static_folder='static')
+profile = Blueprint("profile", __name__, template_folder='../templates/profile', static_folder='static',static_url_path='static')
 
 # Custom imports
 from app import *
@@ -97,6 +97,7 @@ def login():
             print(status)
             session.clear()
             session['logged_in']=True
+            session['EMAIL'] = email
             session["USERNAME"] = status
             print("SESSION LOGIN : ",session)
             return redirect(url_for("profile.user_home"))
@@ -114,6 +115,7 @@ def logout():
     print("AT LOGOUT : ",session)
     session['logged_in'] = False
     session.pop("USERNAME", None)
+    session.pop("EMAIL", None)
     print("SESSION LOGOUT : ",session)
     session.clear()
     return redirect(url_for("profile.index"))
@@ -130,14 +132,29 @@ def user_home():
     return render_template("user_home.html", articles = articles)
 
 
-@profile.route('/userprofile')
+@profile.route('/userprofile', methods=['GET','POST'])
 def user_profile():
-    username = session['USERNAME']
-    user = users.get_user(username)
-    temp = user['account created']
-    user['account created'] = datetime.date(temp)
-    return render_template('profile.html', user=user)
-
-@profile.route('/test')
-def test():
-    return render_template('test.html')
+    if request.method=='GET':
+        if session:
+            username = session['USERNAME']
+            user = users.get_user(username)
+            temp = user['account created']
+            user['account created'] = datetime.date(temp)
+            return render_template('profile.html', user=user)
+        return redirect(url_for("profile.index"))
+    else:
+        req = request.form
+        print(req)
+        info = {
+            'username' : req.get('username'),
+            'first name' : req.get('first_name'),
+            'last name' : req.get('last_name'),
+            'address' : req.get('address'),
+            'city' : req.get('city'),
+            'country' : req.get('country'),
+            'postal_code' : req.get('postal_code'),
+            'about_me' : req.get('about_me')
+        }
+        print(info)
+        users.add_personal_info(info)
+        return redirect(request.url)
