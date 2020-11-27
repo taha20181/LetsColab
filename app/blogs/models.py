@@ -1,5 +1,6 @@
 from app import *
 from app import mongo
+from bson.json_util import ObjectId
 
 
 class Article():
@@ -15,3 +16,8 @@ class Article():
         articles = mongo.db.articles.find()
 
         return articles
+
+    def deleteAnArticle(self, id):
+        resp = mongo.db.articles.delete_one({'_id':ObjectId(id)})
+
+        return resp

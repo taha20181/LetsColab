@@ -3,13 +3,58 @@
 {% block title %} Home {% endblock %}
 
 {% block main %}
-<div class="container">
+<div class="container mb-5">
     <div class="row">
-        <h1>User Home</h1>
-        <!-- <h2>Welcome {{ user }}</h2> -->
-        <div class="row">
-            
-        </div>
+        <img src="../../images/altumcode-gbcQSP1nAGA-unsplash.jpg" alt="" style="background-color: cadetblue; height: 500px; width: 100%;">
     </div>
 </div>
+<div class="container">
+    <h2>Most Recent</h2>
+    <div class="row">
+        {% for i in articles %}
+          <div class="card col-md-4 m-2" style="width: 15rem;">
+            <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+            <div class="card-body">
+              <h5 class="card-title">{{ i['title'] }}</h5>
+              <p class="card-text">{{ i['body'][:150] }}</p>
+              <h6>Author : {{ i['author'] }}</h6>
+              <br>
+              <p>
+                Date : {{ i['datetime']['date'] }}
+                <br>
+                Time : {{ i['datetime']['time'] }}
+              </p>
+              <hr>
+              <div class="justify-content-center">
+                <a href="#" class="btn btn-primary">View Full Article</a>
+                <a href="{{ url_for('blog.delete', id=i._id) }}" class="btn btn-outline-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+    </div>
+    <h2>Most Viewed</h2>
+    <div class="row">
+        <div class="card col-md-4 m-2" style="width: 15rem;">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+    </div>
+    <h2>Most Liked</h2>
+    <div class="row">
+        <div class="card col-md-4 m-2" style="width: 15rem;">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+    </div>
+</div>
+
 {% endblock %}

@@ -4,15 +4,20 @@ from datetime import datetime
 from flask import session
 from flask import flash
 import bcrypt
+from flask import g
+import os
+
 
 profile = Blueprint("profile", __name__, template_folder='../templates/profile', static_folder='static',static_url_path='static')
 
 # Custom imports
 from app import *
+from app import app
 from .models import *
 from ..blogs.models import Article
 users = Users()
 article = Article()
+app.config['IMAGE_UPLOADS'] = "/mnt/d/Taha/digi_magazine/app/images/"
 
 @profile.errorhandler(404)
 def not_found(error=None):
@@ -27,15 +32,20 @@ def not_found(error=None):
 def index():
     if session:
         if session['logged_in'] == True:
-            return redirect(url_for("profile.user_profile"))
-    return render_template("index.html")
+            articles = article.getAllArticles()
+            return render_template("user_home.html", articles = articles)
+
+    articles = article.getAllArticles()
+    return render_template("user_home.html", articles = articles)
 
 @profile.route("/signup", methods=["POST","GET"])
 def signup():
 
     if request.method == "POST":
         req = request.form
-        # req = request.json
+        image = request.files['image']
+        path = os.path.join(app.config['IMAGE_UPLOADS'], image.filename)
+        image.save(path)
         
         missing = list()
         for k, v in req.items():
@@ -49,14 +59,15 @@ def signup():
         newuser={}
         newuser['first_name'] = req.get('fname')
         newuser['last_name'] = req.get('lname')
-        newuser["gender"] = req.get('gender')
+        newuser['image'] = path
+        # newuser["gender"] = req.get('gender')
         newuser["email"] = req.get("email")
-        newuser["mobile"] = req.get('mobile')
+        # newuser["mobile"] = req.get('mobile')
         newuser["username"] = req.get("username")
-        newuser["course"] = req.get("course")
-        newuser["year"] = req.get("year")
-        newuser["branch"] = req.get("branch")
-        newuser["spec"] = req.get("spec")
+        # newuser["course"] = req.get("course")
+        # newuser["year"] = req.get("year")
+        # newuser["branch"] = req.get("branch")
+        # newuser["spec"] = req.get("spec")
         password = req.get("password")
         confirm_passw = req.get('cpassw')
         hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt(14))
@@ -100,7 +111,7 @@ def login():
             session['EMAIL'] = email
             session["USERNAME"] = status
             print("SESSION LOGIN : ",session)
-            return redirect(url_for("profile.user_home"))
+            return redirect(url_for("profile.index"))
         elif status == -1:
             return "Incorrect Password"
         else:
@@ -120,16 +131,16 @@ def logout():
     session.clear()
     return redirect(url_for("profile.index"))
 
-@profile.route("/show_session")
-def show_session():
-    print("SHOW SESSION : ",session)
-    return ""
+# @profile.route("/show_session")
+# def show_session():
+#     print("SHOW SESSION : ",session)
+#     return ""
 
-@profile.route("/home")
-def user_home():
-    user = session["USERNAME"]
-    articles = article.getAllArticles()
-    return render_template("user_home.html", articles = articles)
+# @profile.route("/home")
+# def user_home():
+#     user = session["USERNAME"]
+#     articles = article.getAllArticles()
+#     return render_template("user_home.html", articles = articles)
 
 
 @profile.route('/userprofile', methods=['GET','POST'])
