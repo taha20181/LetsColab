@@ -37,11 +37,18 @@ def create():
         newblog['datetime'] = {"date":date,"time":time}
         newblog['author'] = session['USERNAME']
 
-        # print(newblog)
-
         resp = article.add_article(newblog)
 
         return redirect(url_for('profile.user_home'))
 
     
     return render_template('create.html')
+
+
+@blog.route("/<id>/delete", methods=['DELETE', 'GET'])
+def delete(id):
+    blog = article.deleteAnArticle(id)
+
+    print(blog)
+
+    return redirect(url_for('profile.index'))
