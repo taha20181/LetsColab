@@ -1,0 +1,59 @@
+{% extends 'base_templates/profile_template.html' %}
+
+{% block header %}
+    <!-- <div class="index-header">
+        <h2 class="text-center">{% block title %} Blogs {% endblock %}</h2>
+    </div> -->
+{% endblock %}
+
+{% block main %}
+
+<section>
+    <div class="row">
+        <div class="col-md-6 p-5" style="margin: 4rem 5rem; padding: 4rem;">
+            <div class="full-view__post--title">
+                <h3 style="font-size: 300%;">{{ blog['title'] }}</h3>
+            </div>
+            <img class="card-img-top" src="{{ url_for('static', filename='dmitry-chernyshov-mP7aPSUm7aE-unsplash.jpg' ) }}" alt="Card image cap" style="height: 350px; width: 800px;">
+            <div class="full-view__post--author">
+                <p>By - <strong>{{ blog['author'] }}</strong></p>
+            </div>
+            <div class="full-view__post--created">
+                <p class="post__card--created">{{ blog['datetime']['date'] }}</p>
+            </div>
+            <div class="full-view__post--body">
+                <p class="full-view-body--para">{{ blog['body'] }}</p>
+            </div>
+        </div>
+        
+        
+        <div class="col-md-4">
+            <h3 class="text-center">Most Recent</h3>
+            {% for blog in blogs %}
+            <div class="post__card card" style="margin: 4rem;">
+                <h4 class="post__card--title"><strong>{{ blog['title'] }}</strong></h4>
+                <div class="post__card--body">{{ blog['body'][0:150] }}</div>
+                <div class="post__card--created">{{ blog['datetime']['date'] }}</div>
+                <div class="post__card--author">By - <strong>{{ blog['author'] }}</strong></div>
+                {% if session['USERNAME'] == blog['author'] %}
+                <div class="row justify-content-around mt-2">
+                    <button class="btn btn-outline-warning m-2">
+                        <a href="{{ url_for('blog.delete', id=blog['id']) }}">Delete</a>
+                    </button>
+    
+                    <button class="btn btn-outline-primary m-2">
+                        <a href="{{ url_for('blog.viewfull', id=blog['id']) }}">Read More</a>
+                    </button>
+                </div>
+                {% endif %}
+                {% if not loop.last %}
+                <hr>
+                {% endif %}
+            </div>
+            
+            {% endfor %}
+        </div>
+    </div>
+</section>
+    
+{% endblock %}

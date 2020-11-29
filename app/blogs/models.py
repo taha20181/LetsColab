@@ -21,3 +21,8 @@ class Article():
         resp = mongo.db.articles.delete_one({'_id':ObjectId(id)})
 
         return resp
+
+    def getAnArticle(self, id):
+        resp = mongo.db.articles.find_one({'_id': ObjectId(id)})
+
+        return resp

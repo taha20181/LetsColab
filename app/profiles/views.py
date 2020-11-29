@@ -64,6 +64,7 @@ def signup():
         newuser["email"] = req.get("email")
         # newuser["mobile"] = req.get('mobile')
         newuser["username"] = req.get("username")
+        newuser['blog count'] = "0"
         # newuser["course"] = req.get("course")
         # newuser["year"] = req.get("year")
         # newuser["branch"] = req.get("branch")

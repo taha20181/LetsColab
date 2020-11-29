@@ -1,12 +1,14 @@
 {% extends 'base_templates/profile_template.html' %}
 
+{% block title %} Article {% endblock %}
+
 {% block main %}
 
 <div class="container">
     <h1>Publish an Article</h1>
     <hr>
     &nbsp;
-    <form action="/blog/create" method="post">
+    <form action="/blog/create" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" name="title" id="title" class="form-control">
@@ -14,7 +16,7 @@
         <div class="form-group">
             <label for="image">Image</label>
             <br>
-            <input type="file" name="image" id="image" class="" accept=".jpg, .png, .jpeg, .JPG, .JPEG, .PNG">
+            <input type="file" name="image" id="image" class="image" accept=".jpg, .png, .jpeg, .JPG, .JPEG, .PNG">
         </div>
         <div class="form-group">
             <label for="domain">Domain</label>

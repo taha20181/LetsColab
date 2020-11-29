@@ -27,7 +27,8 @@ class Users:
             "spec": newuser['spec'],
             "password": newuser['password'],
             # "confirm password": newuser['confirm_password'],
-            "account created": newuser['acc_created']
+            "account created": newuser['acc_created'],
+            "blog count": newuser['blog count']
         }
 
         mongo.db.users.insert_one(user) 
