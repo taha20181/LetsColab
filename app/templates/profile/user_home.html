@@ -16,7 +16,7 @@
             <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
             <div class="card-body">
               <h5 class="card-title">{{ i['title'] }}</h5>
-              <p class="card-text">{{ i['body'][:150] }}</p>
+              <p class="card-text">{{ i['body'][:150] | safe}}</p>
               <h6>Author : {{ i['author'] }}</h6>
               <br>
               <p>
