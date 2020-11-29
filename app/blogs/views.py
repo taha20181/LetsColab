@@ -39,7 +39,7 @@ def create():
 
         resp = article.add_article(newblog)
 
-        return redirect(url_for('profile.user_home'))
+        return redirect(url_for('profile.index'))
 
     
     return render_template('create.html')
