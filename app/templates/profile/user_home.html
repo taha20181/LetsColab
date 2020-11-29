@@ -18,8 +18,7 @@
             <div class="card-body">
               <h5 class="card-title">{{ i['title'] }}</h5>
               <p class="card-text">{{ i['body'][:150] | safe}}</p>
-              <h6>Author : {{ i['author'] }}</h6>
-              <br>
+              <h6 style="font-style: oblique;">By : {{ i['author'] }}</h6>
               <p>
                 {{ i['datetime']['date'] }}
               </p>
@@ -38,7 +37,7 @@
                 </a>
               </div>
               <div class="mt-2" id="tags">
-                <span style="border-radius: 5px; background-color:floralwhite; font-style: oblique;" class="p-1">{{ i['domain'] }}</span>
+                <span style="border-radius: 5px; background-color:floralwhite; font-style: oblique; font-size: 90%;" class="p-1">{{ i['domain'] }}</span>
               </div>
               <hr>
               <!-- <div class="justify-content-center"></div> -->
