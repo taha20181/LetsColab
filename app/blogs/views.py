@@ -9,7 +9,7 @@ import os
 from app import *
 from app import app
 from .models import Article
-app.config['IMAGE_UPLOADS'] = '/mnt/d/Taha/digi_magazine/app/static/'
+app.config['IMAGE_UPLOADS'] = '/mnt/d/Shounak/My Projects/digital-magazine/app/static'
 
 blog = Blueprint("blog", __name__, template_folder='../templates/blog', static_folder='static', static_url_path='static')
 
@@ -46,7 +46,7 @@ def create():
         newblog['author'] = session['USERNAME']
 
         resp = article.add_article(newblog)
-        blog_count = blog_count + 1
+        # blog_count = blog_count + 1
 
         return redirect(url_for('profile.index'))
 

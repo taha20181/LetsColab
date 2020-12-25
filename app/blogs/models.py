@@ -26,3 +26,8 @@ class Article():
         resp = mongo.db.articles.find_one({'_id': ObjectId(id)})
 
         return resp
+
+    def addLikes(self, username, likes):
+        resp = mongo.db.articles.update_one({'author': username},{'$set':{'likes':likes}})
+
+        return resp

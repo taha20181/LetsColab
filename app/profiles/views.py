@@ -37,6 +37,23 @@ def index():
 
     articles = article.getAllArticles()
     return render_template("user_home.html", articles = articles)
+    
+@profile.route("/",methods=['POST'])
+def index_like():
+    if session:
+        if session['logged_in'] == True:
+            a = 200
+            author = article.addLikes(session['USERNAME'],a)
+            # print("AUTHOR : ",author)
+            
+            req = request.get_json()
+            print("REQ : ",req)
+            # res = make_response(jsonify(req), 200)
+            # articles = article.getAllArticles()
+            return ""
+    return ""
+    # articles = article.getAllArticles()
+    # return render_template("user_home.html", articles = articles)
 
 @profile.route("/signup", methods=["POST","GET"])
 def signup():
