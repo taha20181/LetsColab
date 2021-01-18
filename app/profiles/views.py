@@ -170,3 +170,8 @@ def user_profile():
         print(info)
         users.add_personal_info(info)
         return redirect(request.url)
+
+
+@profile.route('/project')
+def project():
+    return render_template('base_templates/comingsoon.html')

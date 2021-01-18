@@ -22,7 +22,24 @@
                 <p class="post__card--created">{{ blog['datetime']['date'] }}</p>
             </div>
             <div class="full-view__post--body">
-                <p class="full-view-body--para">{{ blog['body'] }}</p>
+                <p class="full-view-body--para">{{ blog['body']| safe }}</p>
+            </div>
+
+            <div class="mt-3">
+                <p><strong>Comments</strong></p>
+                <hr>
+                <form action="{{ url_for('blog.add_comment', id=blog._id) }}" method="post">
+                    <input type="text" name="comments" id="comments" class='p-2' placeholder="Comment" style="border: none; width: 100%; border-radius: 50px; border: 1px solid gray;">
+                </form>
+
+                <div class="comments">
+                    {% for comment in comments %}
+                        <div class="comment m-3">
+                            <strong>{{ comment['author'] }}</strong>
+                            <p>{{ comment['comment'] }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         

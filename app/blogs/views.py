@@ -5,9 +5,10 @@ from flask import session
 from flask import flash
 from flask import g
 import os
+from bson.json_util import ObjectId
 
 from app import *
-from app import app
+from app import app, mongo
 from .models import Article
 app.config['IMAGE_UPLOADS'] = '/mnt/d/Taha/digi_magazine/app/static/'
 
@@ -33,7 +34,7 @@ def create():
         path = os.path.join(app.config['IMAGE_UPLOADS'], image.filename)
         image.save(path)
         dt = datetime.now()
-        date = dt.strftime("%a, %d-%m-%Y")
+        date = dt.strftime("%d-%m-%Y")
         time = dt.strftime("%H:%M")
         newblog = {}
         newblog['title'] = req.get('title')
@@ -42,11 +43,10 @@ def create():
         newblog['body'] = req.get('body')
         newblog['datetime'] = {"date":date,"time":time}
         newblog['likes'] = "0"
-        newblog['comments'] = {}
         newblog['author'] = session['USERNAME']
 
         resp = article.add_article(newblog)
-        blog_count = blog_count + 1
+        # blog_count = blog_count + 1
 
         return redirect(url_for('profile.index'))
 
@@ -58,13 +58,57 @@ def create():
 def delete(id):
     blog = article.deleteAnArticle(id)
 
-    print(blog)
-
     return redirect(url_for('profile.index'))
 
 @blog.route("/<id>")
 def viewfull(id):
     blog = article.getAnArticle(id)
     blogs = article.getAllArticles()
+    comments = article.getAllComments()
 
-    return render_template('view.html', blog=blog, blogs=blogs)
+    return render_template('view.html', blog=blog, blogs=blogs, comments=comments)
+
+
+@blog.route('/<id>/comment', methods=['POST', 'GET'])
+def add_comment(id):
+    print("Hello")
+    if request.method == 'POST':
+
+        blog = article.getAnArticle(id)
+        comment = request.form['comments']
+        dt = datetime.now()
+        date = dt.strftime("%d-%m-%Y")
+        time = dt.strftime("%H:%M")
+
+        author = session['USERNAME']
+        new_comment = {}
+        new_comment['author'] = author
+        new_comment['blog_id'] = id
+        new_comment['comment'] = comment
+        new_comment['created'] = {'date': date, 'time': time}
+        resp = article.add_comment(new_comment)
+
+        comments = article.getAllComments()
+
+        return redirect (url_for('blog.viewfull', id=id))
+
+@blog.route('/<id>/update', methods=['POST', 'GET'])
+def update(id):
+    if request.method == 'GET':
+        blog = article.getAnArticle(id)
+
+        return render_template('update.html', article=blog)
+
+    if request.method == 'POST':
+        title = request.form['title']
+        domain = request.form['domain']
+        body = request.form['body']
+
+        updated_blog = {}
+        updated_blog['title'] = title
+        updated_blog['domain'] = domain
+        updated_blog['body'] = body
+
+        resp = article.updateAnArticle(id, updated_blog)
+
+        return redirect(url_for('blog.index'))

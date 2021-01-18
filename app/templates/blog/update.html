@@ -1,0 +1,57 @@
+{% extends 'base_templates/profile_template.html' %}
+
+{% block title %} Update {% endblock %}
+
+{% block main %}
+
+<!-- For Text Editor -->
+<script src="{{url_for('static',filename='js/ckeditor.js')}}"></script>
+
+<div class="container">
+    <h1>Update an Article</h1>
+    <hr>
+    &nbsp;
+    <form action="{{url_for('blog.update', id=article._id)}}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" class="form-control" value="{{ article['title'] }}">
+        </div>
+        <div class="form-group">
+            <label for="image">Image</label>
+            <br>
+            <input type="file" name="image" id="image" class="image" accept=".jpg, .png, .jpeg, .JPG, .JPEG, .PNG">
+        </div>
+        <div class="form-group">
+            <label for="domain">Domain</label>
+            <select name="domain" id="domain" class="form-control" value="{{ article['domain'] }}">
+                <option value="" selected disabled>Select</option>
+                <option value="Artificial Intelligence">Artificial Intelligence</option>
+                <option value="Cyber Security">Cyber Security</option>
+                <option value="Blockchain">Blockchain</option>
+                <option value="Cloud Computing">Cloud Computing</option>
+                <option value="Machine Learning">Machine Learning</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="body">Body</label>
+            <textarea name="body" id="editor" cols="30" rows="10" class="form-control">{{ article['body'] }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary">Update</button>
+    </form>
+</div>
+
+
+<!-- For Text Editor -->
+<script>
+    ClassicEditor
+      .create( document.querySelector( '#editor' ) )
+      .then( editor => {
+          console.log( editor );
+      } )
+      .catch( error => {
+          console.error( error );
+      } );
+  </script>
+
+{% endblock %}

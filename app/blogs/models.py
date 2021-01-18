@@ -26,3 +26,23 @@ class Article():
         resp = mongo.db.articles.find_one({'_id': ObjectId(id)})
 
         return resp
+
+    def add_comment(self, comment):
+        resp = mongo.db.comments.insert_one(comment)
+
+        return resp
+
+    def getAllComments(self):
+        comments = mongo.db.comments.find()
+
+        return comments
+
+    def updateAnArticle(self, id, updated_blog):
+        updated = {
+            'title': updated_blog['title'],
+            'domain': updated_blog['domain'],
+            'body': updated_blog['body']
+        }
+        article = mongo.db.articles.update_one({'_id':ObjectId(id)}, {'$set':updated})
+
+        return article
