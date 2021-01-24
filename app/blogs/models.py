@@ -50,3 +50,8 @@ class Article():
         resp = mongo.db.articles.update_one({'author': username},{'$set':{'likes':likes}})
 
         return resp
+
+    def getUserArticles(self, username, email):
+        resp = mongo.db.articles.find({'author': username})
+
+        return resp

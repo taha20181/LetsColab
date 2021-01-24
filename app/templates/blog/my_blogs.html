@@ -1,0 +1,41 @@
+{% extends 'base_templates/profile_template.html' %}
+
+{% block main %}
+
+<div class="container">
+    <h1>My Articles</h1>
+    <hr>
+    &nbsp;
+    {% for i in articles %}
+    <div class="container">
+        <div class="row">
+          <div class="card col-md-4 m-2" style="width: 15rem;">
+            <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+            <div class="card-body">
+              <h5 class="card-title">{{ i['title'] }}</h5>
+              <p class="card-text">{{ i['body'][:150] }}</p>
+              <h6>Author : {{ i['author'] }}</h6>
+              <br>
+              <p>
+                Date : {{ i['datetime']['date'] }}
+                <br>
+                Time : {{ i['datetime']['time'] }}
+              </p>
+              <hr>
+              <div class="row justify-content-around">
+                <div class="">
+                    <a href="#" class="btn btn-outline-primary">View Full</a>
+                  </div>
+                  <div class="">
+                      <a href="" class="btn btn-outline-danger">Delete</a>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+</div>
+
+
+{% endblock %}

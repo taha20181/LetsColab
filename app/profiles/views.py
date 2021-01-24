@@ -60,9 +60,9 @@ def signup():
 
     if request.method == "POST":
         req = request.form
-        image = request.files['image']
-        path = os.path.join(app.config['IMAGE_UPLOADS'], image.filename)
-        image.save(path)
+        # image = request.files['image']
+        # path = os.path.join(app.config['IMAGE_UPLOADS'], image.filename)
+        # image.save(path)
         
         missing = list()
         for k, v in req.items():
@@ -76,7 +76,7 @@ def signup():
         newuser={}
         newuser['first_name'] = req.get('fname')
         newuser['last_name'] = req.get('lname')
-        newuser['image'] = path
+        # newuser['image'] = path
         # newuser["gender"] = req.get('gender')
         newuser["email"] = req.get("email")
         # newuser["mobile"] = req.get('mobile')

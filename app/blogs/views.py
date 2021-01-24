@@ -112,3 +112,15 @@ def update(id):
         resp = article.updateAnArticle(id, updated_blog)
 
         return redirect(url_for('blog.index'))
+
+
+@blog.route('/myblogs', methods=['POST', 'GET'])
+def my_blogs():
+    username = session['USERNAME']
+    email = session['EMAIL']
+
+    articles = article.getUserArticles(username, email)
+
+    print("articles => ", articles)
+
+    return render_template('my_blogs.html', articles=articles)
