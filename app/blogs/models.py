@@ -55,3 +55,8 @@ class Article():
         resp = mongo.db.articles.find({'author': username})
 
         return resp
+
+    def getMostRecent(self):
+        resp = mongo.db.articles.find({'title': 1, 'body': 1, 'author': 1, 'datetime': 1, 'likes': 1}).sort({'likes': -1})
+
+        return list(resp)
