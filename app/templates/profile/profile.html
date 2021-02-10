@@ -5,189 +5,233 @@
 <link rel="stylesheet" href="{{url_for('profile.static',filename='css/profile.css')}}" />
 {% endblock %}
 
-{% block title %} User Profile {% endblock %} 
+{% block title %} User Profile {% endblock %}
 
 {% block main %}
-  <div class="main-content">
-    <!-- Top navbar -->
-    
-    <!-- Header -->
-    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center">
-      <!-- Mask -->
-      <span class="mask bg-gradient-default opacity-8"></span>
-      <!-- Header container -->
-      
-    </div>
-    <!-- Page content -->
-    <div class="container-fluid mt--7">
-      <div class="row">
-        <div class="col-xl-4 mb-5 mb-xl-0">
-          <div class="card card-profile shadow">
-            <div class="row justify-content-center">
-              <div class="col-lg-3 order-lg-2">
-                <div class="card-profile-image">
-                  <a href="#">
-                    <img class="card-img-top" src="{{ url_for('static', filename='dmitry-chernyshov-mP7aPSUm7aE-unsplash.jpg' ) }}" 
+<div class="main-content">
+  <!-- Top navbar -->
+
+  <!-- Header -->
+  <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center">
+    <!-- Mask -->
+    <span class="mask bg-gradient-default opacity-8"></span>
+    <!-- Header container -->
+
+  </div>
+  <!-- Page content -->
+  <div class="container-fluid mt--7">
+    <div class="row">
+      <div class="col-xl-4 mb-5 mb-xl-0">
+        <div class="card card-profile shadow">
+          <div class="row justify-content-center">
+            <div class="col-lg-3 order-lg-2">
+              <div class="card-profile-image">
+                <a href="#">
+                  <img class="card-img-top"
+                    src="{{ url_for('static', filename='dmitry-chernyshov-mP7aPSUm7aE-unsplash.jpg' ) }}"
                     alt="Card image cap" style="height: 200px; width: 200px; border-radius: 50%;">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-              <div class="d-flex justify-content-between">
-                <a href="#" class="btn btn-sm btn-info mr-4">Connect</a>
-                <a href="#" class="btn btn-sm btn-default float-right">Message</a>
-              </div>
-            </div>
-            <div class="card-body pt-0 pt-md-4">
-              <div class="row">
-                <div class="col">
-                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-                    <div>
-                      <span class="heading">22</span>
-                      <span class="description">Articles</span>
-                    </div>
-                    <div>
-                      <span class="heading">10</span>
-                      <span class="description">Projects</span>
-                    </div>
-                    <div>
-                      <span class="heading">89</span>
-                      <span class="description">Likes</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="text-center">
-                <h3>
-                  {{ user['username'] }}<span class="font-weight-light">, 20</span>
-                </h3>
-                <div class="h5 font-weight-300">
-                  <i class="ni location_pin mr-2"></i>Pune, Maharashtra
-                </div>
-                <div class="h5 mt-4">
-                  <i class="ni business_briefcase-24 mr-2"></i>{{ user['branch'] }} Student
-                </div>
-                <div>
-                  <i class="ni education_hat mr-2"></i>MIT ADT University, Pune
-                </div>
-                <hr class="my-4">
-                <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
-                <a href="#">Show more</a>
+                </a>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-xl-8 ">
-          <div class="card bg-secondary shadow">
-            <div class="card-header bg-white border-0">
-              <div class="row align-items-center">
-                <div class="col-8">
-                  <h3 class="mb-0">My account</h3>
-                </div>
-                <div class="col-4 text-right">
-                  <a href="{{ url_for('blog.my_blogs') }}" class="btn btn-sm btn-primary">My Blogs</a>
+          <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+            <div class="d-flex justify-content-between">
+              <a href="#" class="btn btn-sm btn-info mr-4">Connect</a>
+              <a href="#" class="btn btn-sm btn-default float-right">Message</a>
+            </div>
+          </div>
+          <div class="card-body pt-0 pt-md-4">
+            <div class="row">
+              <div class="col">
+                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                  <div>
+                    <span class="heading">22</span>
+                    <span class="description">Articles</span>
+                  </div>
+                  <div>
+                    <span class="heading">10</span>
+                    <span class="description">Projects</span>
+                  </div>
+                  <div>
+                    <span class="heading">89</span>
+                    <span class="description">Likes</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="card-body">
-              
-              <!-- ############################ USER INFO FORM #########################-->
-              <form action="{{url_for('profile.user_profile')}}" method="POST">
-                <h6 class="heading-small text-muted mb-4">User information</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="form-group focused">
-                        <label class="form-control-label" for="username">Username</label>
-                        <input type="text" id="username" name="username" class="form-control form-control-alternative" placeholder="Username" value="{{ user['username'] }}">
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="email">Email address</label>
-                        <span class="form-control form-control-alternative">{{ user['email'] }}</span>
-                        <!-- <input type="email" id="email" name="email" class="form-control form-control-alternative" placeholder="{{ user['email'] }}"> -->
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="form-group focused">
-                        <label class="form-control-label" for="first_name">First name</label>
-                        <input type="text" id="first_name" name="first_name" class="form-control form-control-alternative" placeholder="First name" value="{{ user['first name'] }}">
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group focused">
-                        <label class="form-control-label" for="last_name">Last name</label>
-                        <input type="text" id="last_name" name="last_name" class="form-control form-control-alternative" placeholder="Last name" value="{{ user['last name'] }}">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <hr class="my-4">
-                <!-- Address -->
-                <h6 class="heading-small text-muted mb-4">Contact information</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group focused">
-                        <label class="form-control-label" for="address">Address</label>
-                        <input type="text" id="address" name="address" class="form-control form-control-alternative" placeholder="Home Address" value="{{ user['address'] }}">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <div class="form-group focused">
-                        <label class="form-control-label" for="city">City</label>
-                        <input type="text" id="city" name="city" class="form-control form-control-alternative" placeholder="City" value="{{ user['city'] }}">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group focused">
-                        <label class="form-control-label" for="country">Country</label>
-                        <input type="text" id="country" name="country" class="form-control form-control-alternative" placeholder="Country" value="{{ user['country'] }}">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="country">Postal code</label>
-                        <input type="number" id="postal_code" name="postal_code" class="form-control form-control-alternative" placeholder="000000" value="{{ user['postal_code'] }}">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <hr class="my-4">
-                <!-- Description -->
-                <h6 class="heading-small text-muted mb-4">About me</h6>
-                <div class="pl-lg-4">
-                  <div class="form-group focused">
-                    <label>About Me</label>
-                    <textarea rows="4" id="about_me" name="about_me" class="form-control form-control-alternative" placeholder="A few words about you ..." value="{{ user['about_me'] }}">{{ user['about_me'] }}</textarea>
-                  </div>
-                </div>
-                <div class="text-center">
-                  <!-- <a href="#!" type="submit" class="btn btn-info">Edit profile</a> -->
-                  <button type="submit" class="btn btn-primary">Edit profile</button>
-                </div>
-              </form>
-              <!-- ############### END FORM ############## -->
-
+            <div class="text-center">
+              <h3>
+                {{ user['first name'] }} {{ user['last name'] }}
+              </h3>
+              <div class="h5 font-weight-300">
+                <i class="ni location_pin mr-2" style="padding-right: 20px;">
+                  <a href="https://github.com/{{ user['github'] }}/" target="_blank">
+                    <img class="card-img-top" src="{{ url_for('static', filename='./icons/github.svg' ) }}"
+                      alt="Github Icon" style="height: 20px; width: 20px;">
+                  </a>
+                </i>
+                <i class="ni location_pin mr-2">
+                  <a href="{{ user['linkedin'] }}/" target="_blank">
+                    <img class="card-img-top" src="{{ url_for('static', filename='./icons/linkedin.svg' ) }}"
+                      alt="Linkedin Icon" style="height: 20px; width: 20px;">
+                  </a>
+                </i>
+              </div>
+              <div class="h5 mt-4">
+                <i class="ni business_briefcase-24 mr-2"></i>{{ user['occupation'] }}
+              </div>
+              <div>
+                <i class="ni education_hat mr-2"></i>{{ user['company'] }}
+              </div>
+              <hr class="my-4">
+              <p>{{ user['about_me'] }}</p>
+              <a href="#">Show more</a>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-8 ">
+        <div class="card bg-secondary shadow">
+          <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h3 class="mb-0">My account</h3>
+              </div>
+              <div class="col-4 text-right">
+                <a href="{{ url_for('blog.my_blogs') }}" class="btn btn-sm btn-primary">My Blogs</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+
+            <!-- ############################ USER INFO FORM #########################-->
+            <form action="{{url_for('profile.user_profile')}}" method="POST">
+              <h6 class="heading-small text-muted mb-4">Personal Information</h6>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group focused">
+                      <label class="form-control-label" for="username">Username</label>
+                      <span class="form-control form-control-alternative">{{ user['username'] }}</span>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="email">Email address</label>
+                      <span class="form-control form-control-alternative">{{ user['email'] }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group focused">
+                      <label class="form-control-label" for="first_name">First name</label>
+                      <input type="text" id="first_name" name="first_name" class="form-control form-control-alternative"
+                        placeholder="First name" value="{{ user['first name'] }}">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group focused">
+                      <label class="form-control-label" for="last_name">Last name</label>
+                      <input type="text" id="last_name" name="last_name" class="form-control form-control-alternative"
+                        placeholder="Last name" value="{{ user['last name'] }}">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="my-4">
+
+              <!-- Description -->
+              <h6 class="heading-small text-muted mb-4">Professional Information</h6>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <div class="form-group focused">
+                      <label class="form-control-label" for="occupation">Occupation</label>
+                      <input type="text" id="occupation" name="occupation" class="form-control form-control-alternative"
+                        placeholder="Occupation" value="{{ user['occupation'] }}">
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group focused">
+                      <label class="form-control-label" for="company">Company/College</label>
+                      <input type="text" id="company" name="company" class="form-control form-control-alternative"
+                        placeholder="Company/College" value="{{ user['company'] }}">
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group focused">
+                      <label class="form-control-label" for="country">Country</label>
+                      <input type="text" id="country" name="country" class="form-control form-control-alternative"
+                        placeholder="Country" value="{{ user['country'] }}">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group focused">
+                      <label class="form-control-label" for="github">Github Profile</label>
+                      <input type="text" id="github" name="github" class="form-control form-control-alternative"
+                        placeholder="Github Username" value="{{ user['github'] }}">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group focused">
+                      <label class="form-control-label" for="linkedin">Linkledin Profile</label>
+                      <input type="text" id="linkedin" name="linkedin" class="form-control form-control-alternative"
+                        placeholder="Eg : https://www.linkedin.com/in/user-name-000000000" value="{{ user['linkedin'] }}">
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="row">
+                  <div class="col-lg-6 my-1">
+                    <div class="form-group focused">
+                      <label class="form-control-label" for="linkedin">Linkedin</label>
+                      <div class="form-group focused input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">https://www.linkedin.com/in/</div>
+                        </div>
+                        <input type="text" class="form-control " id="linkedin" name="linkedin"
+                          placeholder="user-name-000000000" value="{{ user['linkedin'] }}">
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="form-group focused">
+                  <label>Skills</label>
+                  <textarea rows="4" id="skills" name="skills" class="form-control form-control-alternative"
+                    placeholder="Skills" value="{{ user['skills'] }}">Selectize</textarea>
+                </div>
+                <div class="form-group focused">
+                  <label>About Me</label>
+                  <textarea rows="4" id="about_me" name="about_me" class="form-control form-control-alternative"
+                    placeholder="A few words about you ..."
+                    value="{{ user['about_me'] }}">{{ user['about_me'] }}</textarea>
+                </div>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary">Edit Profile</button>
+              </div>
+            </form>
+            <!-- ############### END FORM ############## -->
+
           </div>
         </div>
       </div>
     </div>
   </div>
-  <footer class="footer">
-    <div class="row align-items-center justify-content-xl-between">
-      <div class="col-xl-6 m-auto text-center">
-        <div class="copyright">
-          <small>Developed by <a href="https://github.com/Shounak-Pattewale/">Shounak</a> and <a href="https://github.com/taha20181">Taha</a></small>
-        </div>
+</div>
+<footer class="footer">
+  <div class="row align-items-center justify-content-xl-between">
+    <div class="col-xl-6 m-auto text-center">
+      <div class="copyright">
+        <small>Developed by <a href="https://github.com/Shounak-Pattewale/" target="_blank">Shounak</a> and <a
+            href="https://github.com/taha20181" target="_blank">Taha</a></small>
       </div>
     </div>
-  </footer>
+  </div>
+</footer>
 {% endblock %}

@@ -19,14 +19,8 @@ class Users:
             "last name": newuser['last_name'],
             "email": newuser['email'],
             # "gender": newuser['gender'],
-            # "mobile": newuser['mobile'],
             "username": newuser['username'],
-            # "course": newuser['course'],
-            # "year": newuser['year'],
-            # "branch": newuser['branch'],
-            # "spec": newuser['spec'],
             "password": newuser['password'],
-            # "confirm password": newuser['confirm_password'],
             "account created": newuser['acc_created'],
             "blog count": newuser['blog count']
         }
@@ -35,13 +29,13 @@ class Users:
 
     def add_personal_info(self,info):
         user_info = {
-            'username' : info['username'],
             'first name' : info['first name'],
             'last name' : info['last name'],
-            'address' : info['address'],
-            'city' : info['city'],
+            'occupation' : info['occupation'],
+            'company' : info['company'],
+            "github" : info['github'],
+            "linkedin" : info['linkedin'],
             'country' : info['country'],
-            'postal_code' : info['postal_code'],
             'about_me' : info['about_me']
         }
         print(session['EMAIL'])
@@ -50,20 +44,17 @@ class Users:
     def find_user(self,email,password):
         
         found = mongo.db.users.find_one({"email":email},{"_id":0})
-        print("I FOUND SOMETHING : ",found)
-        # print(found["username"])
-        # return "User Found"
-        
+      
         if found is not None:
             if bcrypt.checkpw(password.encode('utf-8'), found["password"]):
-                print("FOUND : ",found["username"])
+                # print("FOUND : ",found["username"])
                 return found["username"]
             else:
                 return -1
         else:
             return 0
 
-    def get_user(self,username):
-        user = mongo.db.users.find_one({'username': username})
+    def get_user(self,email):
+        user = mongo.db.users.find_one({'email': email})
 
         return user

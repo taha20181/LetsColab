@@ -165,23 +165,21 @@ def logout():
 def user_profile():
     if request.method=='GET':
         if session:
-            username = session['USERNAME']
-            user = users.get_user(username)
-            temp = user['account created']
-            user['account created'] = datetime.date(temp)
+            email = session['EMAIL']
+            user = users.get_user(email)
             return render_template('profile.html', user=user)
         return redirect(url_for("profile.index"))
     else:
         req = request.form
         print(req)
         info = {
-            'username' : req.get('username'),
             'first name' : req.get('first_name'),
             'last name' : req.get('last_name'),
-            'address' : req.get('address'),
-            'city' : req.get('city'),
+            'occupation' : req.get('occupation'),
+            'company' : req.get('company'),
+            "github" : req.get('github'),
+            "linkedin" : req.get('linkedin'),
             'country' : req.get('country'),
-            'postal_code' : req.get('postal_code'),
             'about_me' : req.get('about_me')
         }
         print(info)
