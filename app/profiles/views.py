@@ -16,6 +16,7 @@ from app import app
 from .models import *
 from ..blogs.models import Article
 users = Users()
+data = Data()
 article = Article()
 app.config['IMAGE_UPLOADS'] = "/mnt/d/Taha/digi_magazine/app/images/"
 
@@ -167,11 +168,12 @@ def user_profile():
         if session:
             email = session['EMAIL']
             user = users.get_user(email)
+            # skills = data.get_skills()
             return render_template('profile.html', user=user)
         return redirect(url_for("profile.index"))
     else:
         req = request.form
-        print(req)
+        # print(req)
         info = {
             'first name' : req.get('first_name'),
             'last name' : req.get('last_name'),
@@ -180,9 +182,11 @@ def user_profile():
             "github" : req.get('github'),
             "linkedin" : req.get('linkedin'),
             'country' : req.get('country'),
+            'skills' : req.getlist('skills'),
             'about_me' : req.get('about_me')
         }
         print(info)
+        data.add_skills(info['skills'])
         users.add_personal_info(info)
         return redirect(request.url)
 

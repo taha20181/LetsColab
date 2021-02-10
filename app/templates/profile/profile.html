@@ -181,7 +181,8 @@
                     <div class="form-group focused">
                       <label class="form-control-label" for="linkedin">Linkledin Profile</label>
                       <input type="text" id="linkedin" name="linkedin" class="form-control form-control-alternative"
-                        placeholder="Eg : https://www.linkedin.com/in/user-name-000000000" value="{{ user['linkedin'] }}">
+                        placeholder="Eg : https://www.linkedin.com/in/user-name-000000000"
+                        value="{{ user['linkedin'] }}">
                     </div>
                   </div>
                 </div>
@@ -200,12 +201,38 @@
                   </div>
                 </div> -->
                 <div class="form-group focused">
-                  <label>Skills</label>
-                  <textarea rows="4" id="skills" name="skills" class="form-control form-control-alternative"
-                    placeholder="Skills" value="{{ user['skills'] }}">Selectize</textarea>
+                  <label class="form-control-label">Skills</label>
+                  <div class="row">
+                    <div class="col-lg-8 col-md-auto">
+                      <select name="skills" class="selectize-control form-control-alternative" placeholder="Choose some skills" id="search" multiple="multiple">
+                        
+                        <option value="front-end">Front End</option>
+                        <option value="back-end">Back-End</option>
+                        <option value="designer">Designer</option>
+                        <option value="ruby">Ruby</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="python">Python</option>
+                        <option value="developer">Developer</option>
+                        <option value="wordpress">WordPress</option>
+                        <option value="php">PHP</option>
+                        <option value="html">HTML</option>
+                        <option value="css">CSS</option>
+                        <option value="jquery">JQuery</option>
+                        <option value="ember">Ember</option>
+                        <option value="angular">Angular</option>
+                        <option value="react">React</option>
+                        <option value="ios">iOS</option>
+                        <option value="android">Android</option>
+                        <option value="java">Java</option>
+                        <option value="git">Git</option>
+                        <option value="sass">Sass</option>
+                        <option value="engineer">Engineer</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group focused">
-                  <label>About Me</label>
+                  <label class="form-control-label">About Me</label>
                   <textarea rows="4" id="about_me" name="about_me" class="form-control form-control-alternative"
                     placeholder="A few words about you ..."
                     value="{{ user['about_me'] }}">{{ user['about_me'] }}</textarea>
@@ -235,3 +262,22 @@
   </div>
 </footer>
 {% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{{ url_for('static', filename='./js/selectize.js' ) }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='./css/selectize.css' ) }}" />
+<script>
+  $(function () {
+    $('select').selectize({
+      delimiter: ',',
+      persist: false,
+      create: function (input) {
+        return {
+          value: input,
+          text: input
+        }
+      }
+    });
+  });
+</script>
+{% endblock%}

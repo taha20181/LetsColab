@@ -36,6 +36,7 @@ class Users:
             "github" : info['github'],
             "linkedin" : info['linkedin'],
             'country' : info['country'],
+            'skills' : info['skills'],
             'about_me' : info['about_me']
         }
         print(session['EMAIL'])
@@ -58,3 +59,14 @@ class Users:
         user = mongo.db.users.find_one({'email': email})
 
         return user
+
+class Data : 
+    def get_skills(self):
+        skills = mongo.db.skills.find({'_id':0})
+        print(skills)
+
+        return skills
+    
+    def add_skills(self,new_skill):
+        # mongo.db.users.insert_one({})
+        mongo.db.skills.update({},{'$push':{'skills':new_skill}},upsert=True)
