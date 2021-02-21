@@ -6,6 +6,9 @@ from flask import flash
 import bcrypt
 from flask import g
 import os
+import smtplib
+
+
 
 
 profile = Blueprint("profile", __name__, template_folder='../templates/profile', static_folder='static',static_url_path='static')
@@ -96,8 +99,8 @@ def signup():
         newuser['acc_created'] = datetime.now()
 
         if bcrypt.checkpw(confirm_passw.encode('utf-8'), hashed):
-            users.add_newuser(newuser)
-            return redirect(url_for("profile.login"))
+            users.addNewuser(newuser)
+            return redirect(url_for("profile.validate"))
         else:
             flash('Password & Confirm password do not match.')
             return redirect(url_for('profile.signup'))
@@ -122,7 +125,7 @@ def login():
         email = req.get("email")
         password = req.get("password")
 
-        status = users.find_user(email,password)
+        status = users.findUser(email,password)
         if type(status) == str:
             print(status)
             session.clear()
@@ -150,11 +153,6 @@ def logout():
     session.clear()
     return redirect(url_for("profile.index"))
 
-# @profile.route("/show_session")
-# def show_session():
-#     print("SHOW SESSION : ",session)
-#     return ""
-
 # @profile.route("/home")
 # def user_home():
 #     user = session["USERNAME"]
@@ -167,7 +165,7 @@ def user_profile():
     if request.method=='GET':
         if session:
             email = session['EMAIL']
-            user = users.get_user(email)
+            user = users.getUser(email)
             # skills = data.get_skills()
             return render_template('profile.html', user=user)
         return redirect(url_for("profile.index"))
@@ -186,11 +184,17 @@ def user_profile():
             'about_me' : req.get('about_me')
         }
         print(info)
-        data.add_skills(info['skills'])
-        users.add_personal_info(info)
+        data.addSkills(info['skills'])
+        users.addPersonalInfo(info)
         return redirect(request.url)
 
 
 @profile.route('/project')
 def project():
     return render_template('base_templates/comingsoon.html')
+
+
+@profile.route('/signup/validate', methods=['POST', 'GET'])
+def validate():
+    if request.method == 'GET':
+        return render_template('validate.html')

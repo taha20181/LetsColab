@@ -7,8 +7,8 @@
 <!-- For Text Editor -->
 <script src="{{url_for('static',filename='js/ckeditor.js')}}"></script>
 
-<div class="container">
-    <h1>Update an Article</h1>
+<div class="container p-5">
+    <h1>Update</h1>
     <hr>
     &nbsp;
     <form action="{{url_for('blog.update', id=article._id)}}" method="post" enctype="multipart/form-data">
@@ -38,6 +38,7 @@
         </div>
 
         <button type="submit" class="btn btn-outline-primary">Update</button>
+        <a href="{{ url_for('blog.delete',id=article._id ) }}" class="btn btn-outline-danger">Delete</a>
     </form>
 </div>
 
