@@ -135,9 +135,9 @@ def login():
             print("SESSION LOGIN : ",session)
             return redirect(url_for("profile.index"))
         elif status == -1:
-            return "Incorrect Password"
+            flash("Incorrect Email or Password.")
         else:
-            return "User does not exist"
+            flash("User does not exist, Please Sign Up!")
     
     return render_template("login.html")
 
