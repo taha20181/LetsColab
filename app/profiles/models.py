@@ -69,4 +69,6 @@ class Data :
     
     def add_skills(self,new_skill):
         # mongo.db.users.insert_one({})
-        mongo.db.skills.update({},{'$push':{'skills':new_skill}},upsert=True)
+        # mongo.db.skills.update({},{'$push':{'skills':new_skill}},upsert=True)
+        a = list(mongo.db.skills.find( {},{ 'skills': { '$elemMatch': new_skill } } ))
+        print("A : ",a)
