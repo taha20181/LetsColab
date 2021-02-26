@@ -6,11 +6,10 @@ from bson.json_util import ObjectId
 class Article():
 
 
-    def add_article(self, blog):
+    def addArticle(self, blog):
         resp = mongo.db.articles.insert_one(blog)
 
         return resp
-
 
     def getAllArticles(self):
         articles = mongo.db.articles.find()
@@ -27,7 +26,7 @@ class Article():
 
         return resp
 
-    def add_comment(self, comment):
+    def addComment(self, comment):
         resp = mongo.db.comments.insert_one(comment)
 
         return resp
@@ -46,6 +45,7 @@ class Article():
         article = mongo.db.articles.update_one({'_id':ObjectId(id)}, {'$set':updated})
 
         return article
+
     def addLikes(self, username, likes):
         resp = mongo.db.articles.update_one({'author': username},{'$set':{'likes':likes}})
 

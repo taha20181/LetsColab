@@ -10,7 +10,7 @@ from bson.json_util import ObjectId
 from app import *
 from app import app, mongo
 from .models import Article
-app.config['IMAGE_UPLOADS'] = '/mnt/d/Shounak/My Projects/digital-magazine/app/static'
+# app.config['IMAGE_UPLOADS'] = '/mnt/d/digital-magazine/app/static'
 
 blog = Blueprint("blog", __name__, template_folder='../templates/blog', static_folder='static', static_url_path='static')
 
@@ -30,22 +30,22 @@ def create():
     ###########################
     if request.method == 'POST':
         req = request.form
-        image = request.files['image']
-        path = os.path.join(app.config['IMAGE_UPLOADS'], image.filename)
-        image.save(path)
+        # image = request.files['image']
+        # path = os.path.join(app.config['IMAGE_UPLOADS'], image.filename)
+        # image.save(path)
         dt = datetime.now()
         date = dt.strftime("%d-%m-%Y")
         time = dt.strftime("%H:%M")
         newblog = {}
         newblog['title'] = req.get('title')
-        newblog['image'] = image.filename
+        # newblog['image'] = image.filename
         newblog['domain'] = req.get('domain')
         newblog['body'] = req.get('body')
         newblog['datetime'] = {"date":date,"time":time}
         newblog['likes'] = "0"
         newblog['author'] = session['USERNAME']
 
-        resp = article.add_article(newblog)
+        resp = article.addArticle(newblog)
         # blog_count = blog_count + 1
 
         return redirect(url_for('profile.index'))

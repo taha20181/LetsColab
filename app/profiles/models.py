@@ -12,7 +12,7 @@ from app import mongo
 
 class Users:
 
-    def add_newuser(self,newuser):
+    def addNewuser(self,newuser):
 
         user = {
             "first name": newuser['first_name'],
@@ -27,7 +27,7 @@ class Users:
 
         mongo.db.users.insert_one(user) 
 
-    def add_personal_info(self,info):
+    def addPersonalInfo(self,info):
         user_info = {
             'first name' : info['first name'],
             'last name' : info['last name'],
@@ -42,7 +42,7 @@ class Users:
         print(session['EMAIL'])
         mongo.db.users.update_one({'email':session['EMAIL']},{'$set':user_info})
 
-    def find_user(self,email,password):
+    def findUser(self,email,password):
         
         found = mongo.db.users.find_one({"email":email},{"_id":0})
       
@@ -55,19 +55,19 @@ class Users:
         else:
             return 0
 
-    def get_user(self,email):
+    def getUser(self,email):
         user = mongo.db.users.find_one({'email': email})
 
         return user
 
 class Data : 
-    def get_skills(self):
+    def getSkills(self):
         skills = mongo.db.skills.find({'_id':0})
         print(skills)
 
         return skills
     
-    def add_skills(self,new_skill):
+    def addSkills(self,new_skill):
         # mongo.db.users.insert_one({})
         # mongo.db.skills.update({},{'$push':{'skills':new_skill}},upsert=True)
         a = list(mongo.db.skills.find( {},{ 'skills': { '$elemMatch': new_skill } } ))

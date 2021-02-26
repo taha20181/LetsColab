@@ -71,7 +71,7 @@
                   </a>
                 </i>
                 <i class="ni location_pin mr-2">
-                  <a href="{{ user['linkedin'] }}/" target="_blank">
+                  <a href="https://www.linkedin.com/in/{{ user['linkedin'] }}/" target="_blank">
                     <img class="card-img-top" src="{{ url_for('static', filename='./icons/linkedin.svg' ) }}"
                       alt="Linkedin Icon" style="height: 20px; width: 20px;">
                   </a>
@@ -98,7 +98,7 @@
                 <h3 class="mb-0">My account</h3>
               </div>
               <div class="col-4 text-right">
-                <a href="{{ url_for('blog.my_blogs') }}" class="btn btn-sm btn-primary">My Blogs</a>
+                <a href="{{ url_for('blog.my_blogs') }}" class="btn btn-sm btn-primary">Articles</a>
               </div>
             </div>
           </div>
@@ -167,47 +167,44 @@
                     </div>
                   </div>
                 </div>
+                
                 <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group focused">
-                      <label class="form-control-label" for="github">Github Profile</label>
-                      <input type="text" id="github" name="github" class="form-control form-control-alternative"
-                        placeholder="Github Username" value="{{ user['github'] }}">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group focused">
-                      <label class="form-control-label" for="linkedin">Linkledin Profile</label>
-                      <input type="text" id="linkedin" name="linkedin" class="form-control form-control-alternative"
-                        placeholder="Eg : https://www.linkedin.com/in/user-name-000000000"
-                        value="{{ user['linkedin'] }}">
-                    </div>
-                  </div>
-                </div>
-                <!-- <div class="row">
                   <div class="col-lg-6 my-1">
-                    <div class="form-group focused">
-                      <label class="form-control-label" for="linkedin">Linkedin</label>
-                      <div class="form-group focused input-group">
+                    <div class="form-group">
+                      <label class="form-control-label" for="github">GitHub</label>
+                      <div class="input-group">
                         <div class="input-group-prepend">
-                          <div class="input-group-text">https://www.linkedin.com/in/</div>
+                          <div class="input-group-text" style="background-color: #e9ecef; color: #495057;">https://www.github.com/</div>
                         </div>
-                        <input type="text" class="form-control " id="linkedin" name="linkedin"
-                          placeholder="user-name-000000000" value="{{ user['linkedin'] }}">
+                        <input type="text" class="form-control p-3" id="github" name="github"
+                          placeholder=" username" value="{{ user['github'] }}">
                       </div>
                     </div>
                   </div>
-                </div> -->
+                
+                  <div class="col-lg-6 my-1">
+                    <div class="form-group">
+                      <label class="form-control-label" for="linkedin">LinkedIn</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text" style="background-color: #e9ecef; color: #495057;">https://www.linkedin.com/in/</div>
+                        </div>
+                        <input type="text" class="form-control p-3" id="linkedin" name="linkedin"
+                          placeholder=" user-name-000000000" value="{{ user['linkedin'] }}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="form-group focused">
                   <label class="form-control-label">Skills</label>
                   <div class="row">
-                    <div class="col-lg-8 col-md-auto">
+                    <div class="col-lg-12 col-md-auto">
                       <select name="skills" class="selectize-control form-control-alternative" placeholder="Choose some skills" id="search" multiple="multiple">
                         
-                        <option value="front-end">Front End</option>
-                        <option value="back-end">Back-End</option>
+                        {% for skill in user['skills'] %}
+                        <option value="{{ skill }}" selected>{{ skill }}</option>
+                        {% endfor %}
+                        <!-- <option value="back-end">Back-End</option>
                         <option value="designer">Designer</option>
                         <option value="ruby">Ruby</option>
                         <option value="javascript">JavaScript</option>
@@ -226,7 +223,7 @@
                         <option value="java">Java</option>
                         <option value="git">Git</option>
                         <option value="sass">Sass</option>
-                        <option value="engineer">Engineer</option>
+                        <option value="engineer">Engineer</option> -->
                       </select>
                     </div>
                   </div>

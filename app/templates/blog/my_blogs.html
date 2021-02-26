@@ -2,7 +2,7 @@
 
 {% block main %}
 
-<div class="container">
+<div class="container p-5">
     <h1>My Articles</h1>
     <hr>
     &nbsp;
@@ -11,7 +11,7 @@
         <div class="row">
           <div class="card col-md-4 m-2" style="width: 15rem;">
             <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-            <div class="card-body">
+            <a href="{{ url_for('blog.viewfull', id=i._id) }}" class="card-body" style="text-decoration: none; color: black;">
               <h5 class="card-title">{{ i['title'] }}</h5>
               <p class="card-text">{{ i['body'][:150] }}</p>
               <h6>Author : {{ i['author'] }}</h6>
@@ -24,13 +24,13 @@
               <hr>
               <div class="row justify-content-around">
                 <div class="">
-                    <a href="#" class="btn btn-outline-primary">View Full</a>
-                  </div>
-                  <div class="">
-                      <a href="" class="btn btn-outline-danger">Delete</a>
-                  </div>
+                    <a href="{{ url_for('blog.viewfull', id=i._id) }}" class="btn btn-outline-primary">View Full</a>
+                </div>
+                <div class="">
+                    <a href="{{ url_for('blog.update', id=i._id) }}" class="btn btn-outline-warning">Update</a>
+                </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>
