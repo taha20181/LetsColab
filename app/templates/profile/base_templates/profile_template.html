@@ -16,9 +16,9 @@
     <title>{% block title %} {% endblock %} | Digi-Magazine</title>
 </head>
 
-<body>
+<body onload="visited()">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Digital Magazine</a>
+        <a class="navbar-brand" href="/">Share and Colab</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -82,6 +82,11 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="{{url_for('static',filename='js/app.js')}}"></script>
+    <script>
+        function visited() {
+            
+        }
+    </script>
     
     {% block script %}{% endblock %}
     
